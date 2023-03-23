@@ -12,7 +12,7 @@
     RootModule = 'PSOutLog.psm1'
     
     # Version number of this module.
-    ModuleVersion = '1.0.0'
+    ModuleVersion = '1.0.1'
     
     # Supported PSEditions
     CompatiblePSEditions = 'Core', 'Desktop'
@@ -33,7 +33,7 @@
     Description = 'Logging Function for PowerShell'
     
     # Minimum version of the PowerShell engine required by this module
-    PowerShellVersion = '5.1'
+    PowerShellVersion = '6.0'
     
     # Name of the PowerShell host required by this module
     # PowerShellHostName = ''
