@@ -7,7 +7,7 @@ PSOutLog is a PowerShell logging module designed to provide streamlined logging 
 
 ## Overview
 
-- **Module Version**: 1.2  
+- **Module Version**: 1.2.1  
 - **Author**: Steve Im  
 - **Company**: towhereim  
 - **Description**: Logging Function for PowerShell. PSOutLog creates a log file (named <scriptname>.log) under the logs folder and highlights key events using empathic keywords such as `START`, `END`, and `STEP`.  
