@@ -12,7 +12,7 @@
 RootModule = 'PSOutLog.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.1'
+ModuleVersion = '1.2'
 
 # Supported PSEditions
 CompatiblePSEditions = 'Core', 'Desktop'
@@ -110,7 +110,7 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = 'Just Out-Log text. It will make logfile with your scriptname.log under the logs folder. Empathic keywords(START, END, STEP) will be highlighted. Out-LogBlock function added.'
+        ReleaseNotes = 'Just Out-Log text. It will make logfile with your scriptname.log under the logs folder. Empathic keywords(START, END, STEP) will be highlighted. Out-LogBlock function added. Added indent parameter to log functions.'
 
         # Prerelease string of this module
         # Prerelease = ''
