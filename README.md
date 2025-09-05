@@ -25,7 +25,10 @@ PSOutLog is a PowerShell logging module designed to provide streamlined logging 
 
 ## Installation
 
-1. Copy the PSOutLog module folder to one of your PowerShell module directories.
+1. This module is registered in the PowerShell Gallery. You can install it using:
+   ```powershell
+   Install-Module PSOutLog
+   ```
 2. Import the module in your PowerShell session using:
    ```powershell
    Import-Module PSOutLog
