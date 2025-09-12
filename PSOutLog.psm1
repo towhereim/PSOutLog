@@ -11,12 +11,12 @@ function Add-Logging ([string]$str, [string]$lvl, [int]$indent = 0) {
    $psPath = (Get-PSCallStack)[2].ScriptName
    $slash = ($IsWindows) ? "\" : "/"
    $path = ($psPath -and $psPath -notcontains ".psm1") ? $psPath.Replace($slash + $psPath.Split($slash)[-1], "") : "."
-   $logPath = "$path/logs/$($psPath ? $psPath.Split($slash)[-1].Split('.ps1')[0] : '')$($env:PSOUTLOG_DATE_FORMAT ? "_" + $(Get-Date -Format $env:PSOUTLOG_DATE_FORMAT) : '').log"
+   $logPath = "$path/logs/$($psPath ? $psPath.Split($slash)[-1].Split('.ps1')[0] : '')$($env:PSOUTLOG_FILE_DATE_FORMAT ? "_" + $(Get-Date -Format $env:PSOUTLOG_FILE_DATE_FORMAT) : '').log"
    if (!(Test-Path $logPath)) { New-Item $logPath -Force }
    $strIndent = ""
    0..($indent * 2) | ForEach-Object { if ($_ -gt 0) { $strIndent += " " } }
-   $logStr = "$(Get-Date -Format "yyyy-MM-dd HH:mm:ss.fff")`t$lvl $strIndent$str"
-   foreach ($item in $keyword) { if ($logStr -cmatch $item) { $writeStr = $logStr -replace $item, "$($color.Orange)$item$($PSStyle.Reset)" } }
+   $logStr = "$(Get-Date -Format ($env:PSOUTLOG_LOG_DATE_FORMAT ? $env:PSOUTLOG_LOG_DATE_FORMAT : "yyyy-MM-dd HH:mm:ss.fff"))`t$lvl $strIndent$str"
+   foreach ($item in $keyword) { if ($logStr -cmatch $item) { $writeStr = ($writeStr ? $writeStr : $logStr) -replace $item, "$($color.Orange)$item$($PSStyle.Reset)" } }
    $boldStr = $logStr -match " : " ? $logStr -split " : " : $null
    if ($boldStr -and $boldStr[1]) { $writeStr = ($writeStr ? $writeStr : $logStr) -replace $boldStr[-1], "$($color.Purple)$($boldStr[-1])" }
    $writeStr = $writeStr ? $writeStr : $logStr
@@ -76,12 +76,12 @@ function Out-ErrLog ([string]$str, [int]$indent = 0) { Add-Logging $str "[ERR]" 
    Out-LogBlock "$($MyInvocation.MyCommand.Name)" "start" 2
    Out-LogBlock "$($MyInvocation.MyCommand.Name)" "end" 2
 #>
-function Out-LogBlock ($title, [string][ValidateSet("start", "end")]$startORend = "start", [int]$indent = 1) {
+function Out-LogBlock ($title, [string][ValidateSet("start", "end")]$type = "start", [int]$indent = 1) {
    $charStep = @("≫", "—", "✧", "•", "∘", "･")
    $strLine = ""
    1..(79 - ($indent * 2)) | ForEach-Object { $strLine += $charStep[$indent] }
 
-   if ($startORend -eq "start") { Out-Log $strLine $indent }
-   Out-Log "$($strIndent)$($startORend.ToUpper()) : $title" $indent
-   if ($startORend -eq "end") { Out-Log $strLine $indent }
+   if ($type -eq "start") { Add-Logging $strLine "[INFO]" $indent }
+   Add-Logging "$($strIndent)$($type.ToUpper()) : $title" "[INFO]" $indent
+   if ($type -eq "end") { Add-Logging $strLine "[INFO]" $indent }
 }
